@@ -7,12 +7,12 @@
 
   <property>
     <name>hadoop.tmp.dir</name>
-    <value>/mnt/ephemeral-hdfs</value>
+    <value>/mnt/hadoop-tmp</value>
   </property>
 
   <property>
     <name>fs.default.name</name>
-    <value>hdfs://{{active_master}}:9000</value>
+    <value>hdfs://aws-hadoop-0</value>
   </property>
 
   <property>
