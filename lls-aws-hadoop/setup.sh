@@ -2,6 +2,6 @@
 # @Author: Guodong Wang
 # @Date:   2015-02-27 18:02:06
 # @Last Modified by:   Guodong Wang
-# @Last Modified time: 2015-02-27 18:02:19
+# @Last Modified time: 2015-03-10 17:38:07
 
-/root/spark-ec2/copy-dir /etc/hadoop/conf
+/root/spark-ec2/copy-dir /root/hadoop/etc/hadoop
