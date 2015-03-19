@@ -31,26 +31,41 @@ if [[ $instance_type == r3* || $instance_type == i2* || $instance_type == hi1* ]
   # Format & mount using ext4, which has the best performance among ext3, ext4, and xfs based
   # on our shuffle heavy benchmark
   EXT4_MOUNT_OPTS="defaults,noatime,nodiratime"
-  rm -rf /mnt*
-  mkdir /mnt
-  # To turn TRIM support on, uncomment the following line.
-  #echo '/dev/sdb /mnt  ext4  defaults,noatime,nodiratime,discard 0 0' >> /etc/fstab
-  mkfs.ext4 -E lazy_itable_init=0,lazy_journal_init=0 /dev/sdb
-  mount -o $EXT4_MOUNT_OPTS /dev/sdb /mnt
+  if ! blkid /dev/sdb ; then
+    rm -rf /mnt
+    mkdir /mnt
+    # To turn TRIM support on, uncomment the following line.
+    #echo '/dev/sdb /mnt  ext4  defaults,noatime,nodiratime,discard 0 0' >> /etc/fstab
+    mkfs.ext4 -E lazy_itable_init=0,lazy_journal_init=0 /dev/sdb
+    mount -o $EXT4_MOUNT_OPTS /dev/sdb /mnt
+  else
+    echo "device sdb is mounted! Probably setup-salve has ran more than once."
+  fi
 
   if [[ $instance_type == "r3.8xlarge" || $instance_type == "hi1.4xlarge" ]]; then
-    mkdir /mnt2
     # To turn TRIM support on, uncomment the following line.
     #echo '/dev/sdc /mnt2  ext4  defaults,noatime,nodiratime,discard 0 0' >> /etc/fstab
     if [[ $instance_type == "r3.8xlarge" ]]; then
-      mkfs.ext4 -E lazy_itable_init=0,lazy_journal_init=0 /dev/sdc      
-      mount -o $EXT4_MOUNT_OPTS /dev/sdc /mnt2
+      if ! blkid /dev/sdc ; then
+        rm -rf /mnt2
+        mkdir /mnt2
+        mkfs.ext4 -E lazy_itable_init=0,lazy_journal_init=0 /dev/sdc      
+        mount -o $EXT4_MOUNT_OPTS /dev/sdc /mnt2
+      else
+        echo "device sdc is mounted! Probably setup-salve has ran more than once."
+      fi
     fi
     # To turn TRIM support on, uncomment the following line.
     #echo '/dev/sdf /mnt2  ext4  defaults,noatime,nodiratime,discard 0 0' >> /etc/fstab
     if [[ $instance_type == "hi1.4xlarge" ]]; then
-      mkfs.ext4 -E lazy_itable_init=0,lazy_journal_init=0 /dev/sdf      
-      mount -o $EXT4_MOUNT_OPTS /dev/sdf /mnt2
+      if ! blkid /dev/sdf ; then
+        rm -rf /mnt2
+        mkdir /mnt2
+        mkfs.ext4 -E lazy_itable_init=0,lazy_journal_init=0 /dev/sdf      
+        mount -o $EXT4_MOUNT_OPTS /dev/sdf /mnt2
+      else
+        echo "device sdf is mounted! Probably setup-salve has ran more than once."
+      fi
     fi    
   fi
 fi
