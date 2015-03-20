@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+
+<!-- Hive Configuration can either be stored in this file or in the hadoop configuration files  -->
+<!-- that are implied by Hadoop setup variables.                                                -->
+<!-- Aside from Hadoop setup variables - this file is provided as a convenience so that Hive    -->
+<!-- users do not have to edit hadoop configuration files (that may be managed as a centralized -->
+<!-- resource).                                                                                 -->
+
+<!-- Hive Execution Parameters -->
+        <property>
+                <name>hive.exec.compress.output</name>
+                <value>true</value>
+        </property>
+        <property>
+                <name>io.seqfile.compression.type</name>
+                <value>BLOCK</value>
+        </property>
+        <property>
+                <name>mapred.output.compression.codec</name>
+                <value>org.apache.hadoop.io.compress.GzipCodec</value>
+        </property>
+        <property>
+                <name>javax.jdo.option.ConnectionURL</name>
+                <value>jdbc:mysql://aws-analytics-db.cyhqzoqszkzc.rds.cn-north-1.amazonaws.com.cn:6690/hive?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf8</value>
+                <description>JDBC connect string for a JDBC metastore</description>
+        </property>
+
+        <property>
+                <name>javax.jdo.option.ConnectionDriverName</name>
+                <value>com.mysql.jdbc.Driver</value>
+                <description>Driver class name for a JDBC metastore</description>
+        </property>
+        <property>
+                <name>javax.jdo.option.ConnectionUserName</name>
+                <value>hive</value>
+                <description>username to use against metastore database</description>
+        </property>
+        <property>
+                <name>javax.jdo.option.ConnectionPassword</name>
+                <value>vEam-Ag-ma</value>
+                <description>password to use against metastore database</description>
+        </property>
+        <property>
+                <name>hive.default.fileformat</name>
+                <value>SequenceFile</value>
+        </property>
+        <property>
+                <name>mapreduce.output.fileoutputformat.compress</name>
+                <value>true</value>
+        </property>
+        <property>
+                <name>mapreduce.output.fileoutputformat.compress.codec</name>
+                <value>org.apache.hadoop.io.compress.SnappyCodec</value>
+        </property>
+        <property>
+                <name>hive.stats.jdbcdriver</name>
+                <value>com.mysql.jdbc.Driver</value>
+        </property>
+        <property>
+                <name>hive.stats.dbconnectionstring</name>
+                <value>jdbc:mysql://aws-analytics-db.cyhqzoqszkzc.rds.cn-north-1.amazonaws.com.cn:6690/TempStatsStore?createDatabaseIfNotExist=true&amp;user=tempstatstore&amp;password=tempstatstore123</value>
+        </property>
+        <property>
+                <name>hive.variable.substitute.depth</name>
+                <value>500</value>
+        </property>
+        <property>
+                <name>hive.metastore.warehouse.dir</name>
+                <value>/warehouse</value>
+        </property>
+        <property>
+                <name>hive.server2.thrift.bind.host</name>
+                <value>${local.bind.address}</value>
+        </property>
+        <property>
+                <name>hive.merge.mapredfiles</name>
+                <value>true</value>
+        </property>
+        <property>
+                <name>hive.input.format</name>
+                <value>org.apache.hadoop.hive.ql.io.CombineHiveInputFormat</value>
+        </property>
+<property>
+    <name>hive.security.authorization.enabled</name>
+    <value>true</value>
+    <description>enable or disable the hive client authorization</description>
+  </property>
+
+  <property>
+    <name>hive.security.authorization.manager</name>
+    <value>org.apache.hadoop.hive.ql.security.authorization.StorageBasedAuthorizationProvider</value>
+    <description>the hive client authorization manager class name.
+    The user defined authorization class should implement interface
+    org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider.
+    </description>
+  </property>
+<property>
+  <name>hive.server2.authentication</name>
+  <value>CUSTOM</value>
+  <description>Client authentication types.
+  NONE: no authentication check
+  LDAP: LDAP/AD based authentication
+  KERBEROS: Kerberos/GSSAPI authentication
+  CUSTOM: Custom authentication provider
+  (Use with property hive.server2.custom.authentication.class)
+  </description>
+</property>
+
+<property>
+  <name>hive.server2.custom.authentication.class</name>
+  <value>com.liulishuo.data.hive.server.FilePasswordAuthenticationProvider</value>
+  <description>
+  </description>
+</property>
+        <property>
+                <name>hive.server2.enable.doAs=true</name>
+                <value>true</value>
+        </property>
+<property>
+  <name>hive.server2.enable.impersonation</name>
+  <description>Enable user impersonation for HiveServer2</description>
+  <value>true</value>
+</property>
+<property>
+ <name>datanucleus.autoCreateSchema</name>
+ <value>false</value>
+ <description>creates necessary schema on a startup if one doesn't exist. set this to false, after creating it once</description>
+</property>
+</configuration>
