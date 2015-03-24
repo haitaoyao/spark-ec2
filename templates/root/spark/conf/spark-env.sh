@@ -6,6 +6,7 @@ export SPARK_LOCAL_DIRS="{{spark_local_dirs}}"
 export SPARK_MASTER_OPTS="{{spark_master_opts}}"
 export SPARK_WORKER_INSTANCES={{spark_worker_instances}}
 export SPARK_WORKER_CORES={{spark_worker_cores}}
+{{spark_worker_memory}}
 
 export HADOOP_HOME="/root/hadoop"
 export SPARK_MASTER_IP={{active_master}}

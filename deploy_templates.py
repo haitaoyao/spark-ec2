@@ -32,6 +32,19 @@ slave_cpus = int(os.popen(slave_cpu_command).read().strip())
 system_ram_kb = min(slave_ram_kb, master_ram_kb)
 
 system_ram_mb = system_ram_kb / 1024
+
+worker_mem = os.getenv("SPARK_SLAVE_WORKER_MEM")
+if worker_mem:
+  worker_mem = worker_mem.strip().lower()
+  if worker_mem.endswith("m"):
+    worker_mem_mb = int(worker_mem[:-1])
+  elif worker_mem.endswith("g"):
+    worker_mem_mb = int(worker_mem[:-1]) * 1024
+  else:
+    worker_mem_mb = int(worker_mem) / 1024
+  print "worker_mem_mb:%s" % worker_mem_mb
+  system_ram_mb = min(worker_mem_mb, system_ram_mb)
+
 # Leave some RAM for the OS, Hadoop daemons, and system caches
 if system_ram_mb > 100*1024:
   spark_mb = system_ram_mb - 15 * 1024 # Leave 15 GB RAM
@@ -70,7 +83,12 @@ template_vars = {
   "default_tachyon_mem": "%dMB" % tachyon_mb,
   "aws_access_key_id": os.getenv("AWS_ACCESS_KEY_ID"),
   "aws_secret_access_key": os.getenv("AWS_SECRET_ACCESS_KEY"),
+  "spark_worker_memory" : None
 }
+
+if os.getenv("SPARK_SLAVE_WORKER_MEM"):
+  template_vars["spark_worker_memory"] = "export SPARK_WORKER_MEMORY=\"%s\"" % os.getenv("SPARK_SLAVE_WORKER_MEM")
+
 
 template_dir="/root/spark-ec2/templates"
 
