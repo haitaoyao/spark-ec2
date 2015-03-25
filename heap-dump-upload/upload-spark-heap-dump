@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cdir=$(cd $(dirname $0) && pwd)
+
+python $cdir/upload_spark_heap_dump.py

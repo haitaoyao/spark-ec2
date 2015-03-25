@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# upload master heap dump
+echo "upload heap dump on master" 1>&2
+/usr/local/bin/upload-spark-heap-dump
+
+slaves="/root/spark/conf/slaves"
+
+if [[ ! -f $slaves ]]; then
+  echo "Can not find slave list." 1>&2
+  exit 0
+fi
+
+for s in $(cat $slaves); do
+  echo "upload heap dump on slave:$s" 1>&2
+  ssh root@$s "/usr/local/bin/upload-spark-heap-dump"
+done
