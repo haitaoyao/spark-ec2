@@ -4,6 +4,7 @@
 # @Last Modified by:   Guodong Wang
 # @Last Modified time: 2015-04-10 10:59:07
 
+export AWS_DEFAULT_REGION='cn-north-1'
 s3a_tar_s3_key="s3://warehouse-tmp/spark-ec2/s3a-package/s3a.tgz"
 s3a_local_dir=/root/s3a-install
 s3a_lib_dir=/usr/lib/s3a
