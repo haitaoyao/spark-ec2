@@ -142,4 +142,19 @@ echo '#!/bin/bash' > /usr/bin/realpath
 echo 'readlink -e "$@"' >> /usr/bin/realpath
 chmod a+x /usr/bin/realpath
 
+
+# link the tmp to SSD mount point
+if [[ ! -L /tmp ]]; then
+  # if /tmp is not symlink
+  if [[ -d /mnt2 ]]; then
+    mv /tmp /mnt2/
+    ln -s /mnt2/tmp /tmp
+    echo "mv tmp to /mnt2" 1>&2
+  elif [[ -d /mnt ]]; then
+    mv /tmp /mnt/
+    ln -s /mnt/tmp /tmp
+    echo "mv tmp to /mnt" 1>&2
+  fi
+fi
+
 popd > /dev/null
