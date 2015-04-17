@@ -29,7 +29,7 @@ slave_ram_kb = int(os.popen(slave_mem_command).read().strip())
 
 slave_cpus = int(os.popen(slave_cpu_command).read().strip())
 
-system_ram_kb = min(slave_ram_kb, master_ram_kb)
+system_ram_kb = slave_ram_kb
 
 system_ram_mb = system_ram_kb / 1024
 
